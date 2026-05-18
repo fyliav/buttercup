@@ -18,11 +18,24 @@ cd dev/docker-compose && docker-compose --profile graphdb up -d
 cd dev/docker-compose && docker-compose down
 ```
 
+### Using prebuilt images (skip local builds)
+
+`compose.prebuilt.yaml` is an overlay that replaces every locally-built
+component with its prebuilt image from GHCR, so nothing is built locally:
+
+```bash
+cd dev/docker-compose && docker compose -f compose.yaml -f compose.prebuilt.yaml up -d
+
+# Pin a specific image tag (defaults to "main"):
+BUTTERCUP_IMAGE_TAG=<branch-or-tag> docker compose -f compose.yaml -f compose.prebuilt.yaml up -d
+```
+
 ## Configuration
 
 - `env.template` - Template for environment variables (copy to `.env` and customize)
 - `env.dev.compose` - Development-specific environment configuration
 - `compose.yaml` - Main compose file with all services
+- `compose.prebuilt.yaml` - Overlay that pulls prebuilt GHCR images instead of building locally
 
 ## Notes
 
